@@ -32,13 +32,18 @@ export async function POST(req: Request) {
 
 
   try {
-    const walletPath = path.join(process.cwd(), 'wallet.json');
-    const jwk = JSON.parse(fs.readFileSync(walletPath, 'utf8'));
-      // const arweave = Arweave.init({
-      //   host: 'arweave.net',
-      //   port: 443,
-      //   protocol: 'https',
-      // });
+    const jwkString = process.env.ARWEAVE_WALLET_JWK;
+    if (!jwkString) {
+      console.error('ARWEAVE_WALLET_JWK environment variable not set');
+      return NextResponse.json({ error: 'Server configuration error: Wallet not found' }, { status: 500 });
+    }
+    const jwk = JSON.parse(jwkString);
+
+    // const arweave = Arweave.init({
+    //   host: 'arweave.net',
+    //   port: 443,
+    //   protocol: 'https',
+    // });
     const arweave = Arweave.init({
       host: 'localhost',
       port: 1984,

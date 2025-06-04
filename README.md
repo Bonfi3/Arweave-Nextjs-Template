@@ -24,8 +24,14 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 For local development and testing with Arweave, follow these steps:
 
-1.  **Create a Wallet**:
-    Ensure you have a `wallet.json` file in the root of this project. This file contains your Arweave wallet key.
+1.  **Configure Your Arweave Wallet**:
+    Create a `.env.local` file in the root of this project.
+    Add your Arweave wallet key as an environment variable in this file:
+    ```
+    ARWEAVE_WALLET_JWK='{"kty":"RSA","n":"your_n_value","e":"AQAB","d":"your_d_value", ...}'
+    ```
+    Replace the example JWK with your actual Arweave wallet's JSON Web Key.
+    **Important**: Ensure `.env.local` is added to your `.gitignore` file to prevent committing your secret key.
 
 2.  **Install ArLocal**:
     If you haven't already, install `arlocal` globally. This tool allows you to run a local Arweave gateway.
@@ -41,9 +47,9 @@ For local development and testing with Arweave, follow these steps:
     This will typically start a gateway at `http://localhost:1984`.
 
 4.  **Mint Tokens (Optional)**:
-    To add funds to your wallet on the local network, you can use the following `curl` command. Replace `<wallet_address>` with your actual Arweave wallet address from `wallet.json` and `<quantity>` with the desired amount of Winston (e.g., 1000000000000 for 1 AR).
+    To add funds to your wallet on the local network, you can use the following `curl` command. Replace `<your_wallet_address>` with your Arweave wallet address and `<quantity>` with the desired amount of Winston (e.g., 1000000000000 for 1 AR).
     ```bash
-    curl http://localhost:1984/mint/<wallet_address>/<quantity>
+    curl http://localhost:1984/mint/<your_wallet_address>/<quantity>
     ```
 
 ## Learn More
